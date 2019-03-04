@@ -60,11 +60,11 @@ namespace VideoService
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICryptService, CryptService>();
             services.AddScoped<IUnitOfWorkService, UnitOfWorkService>();
+            services.AddScoped<IGenreService, GenreService>();
 
             services.AddOptions<AuthSettings>(Configuration["AuthSettings"]);
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +81,7 @@ namespace VideoService
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCors(builder => builder.AllowAnyOrigin());
             //app.UseSpaStaticFiles();
 
             // 2. Enable authentication middleware
@@ -93,15 +94,6 @@ namespace VideoService
                     template: "api/{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                //spa.Options.SourcePath = "ClientApp";
-
-                //if (env.IsDevelopment())
-                //{
-                //    spa.UseReactDevelopmentServer(npmScript: "start");
-                //}
-            });
         }
     }
 }

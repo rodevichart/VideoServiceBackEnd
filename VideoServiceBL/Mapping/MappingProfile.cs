@@ -10,9 +10,9 @@ namespace VideoServiceBL.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Movie, ListOfMoviesDto>()
-                .ForMember(dest => dest.GenreName,
-                            opt => opt.MapFrom(m => m.Genre.Name));
+            CreateMap<Movie, ListOfMoviesDto>();
+                //.ForMember(dest => dest.GenreName,
+                //            opt => opt.MapFrom(m => m.Genre.Name));
 
 
             CreateMap<Movie, MovieDto>();

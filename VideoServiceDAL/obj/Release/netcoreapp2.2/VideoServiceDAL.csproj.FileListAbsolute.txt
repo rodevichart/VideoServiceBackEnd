@@ -1,0 +1,16 @@
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\VideoServiceDAL.deps.json
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\VideoServiceDAL.dll
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\VideoServiceDAL.pdb
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\Microsoft.EntityFrameworkCore.dll
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\Microsoft.EntityFrameworkCore.Relational.dll
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\Microsoft.EntityFrameworkCore.xml
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\Microsoft.EntityFrameworkCore.Relational.xml
+D:\VideoServiceBackEnd\VideoServiceDAL\bin\Release\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.xml
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Release\netcoreapp2.2\VideoServiceDAL.csprojAssemblyReference.cache
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Release\netcoreapp2.2\VideoServiceDAL.csproj.CoreCompileInputs.cache
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Release\netcoreapp2.2\VideoServiceDAL.AssemblyInfoInputs.cache
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Release\netcoreapp2.2\VideoServiceDAL.AssemblyInfo.cs
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Release\netcoreapp2.2\VideoServiceDAL.csproj.CopyComplete
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Release\netcoreapp2.2\VideoServiceDAL.dll
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Release\netcoreapp2.2\VideoServiceDAL.pdb

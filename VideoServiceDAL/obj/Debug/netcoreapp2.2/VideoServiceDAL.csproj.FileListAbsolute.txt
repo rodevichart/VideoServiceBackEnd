@@ -23,6 +23,7 @@ D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityF
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.xml
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.Relational.xml
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.xml
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.csprojAssemblyReference.cache
 D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.csproj.CoreCompileInputs.cache
 D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.AssemblyInfoInputs.cache
 D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.AssemblyInfo.cs
