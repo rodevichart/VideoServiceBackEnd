@@ -27,6 +27,9 @@ D:\CoreReactDemo\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.EntityFramewor
 D:\CoreReactDemo\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\CoreReactDemo\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.Relational.xml
 D:\CoreReactDemo\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.xml
+D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.csproj.CoreCompileInputs.cache
+D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.AssemblyInfoInputs.cache
+D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.AssemblyInfo.cs
 D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\VideoServiceBL.deps.json
 D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\VideoServiceBL.dll
 D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\VideoServiceBL.pdb
@@ -50,9 +53,8 @@ D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\System.IdentityMod
 D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.Relational.xml
 D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.xml
 D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.csprojAssemblyReference.cache
-D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.csproj.CoreCompileInputs.cache
-D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.AssemblyInfoInputs.cache
-D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.AssemblyInfo.cs
 D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.csproj.CopyComplete
 D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.dll
 D:\VideoServiceBackEnd\VideoServiceBL\obj\Debug\netcoreapp2.2\VideoServiceBL.pdb
+D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Logging.Abstractions.dll
+D:\VideoServiceBackEnd\VideoServiceBL\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Logging.Abstractions.xml

@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
-using VideoServiceBL.DTOs.UsersDtos;
+using VideoServiceDAL.Models;
 
 namespace VideoServiceBL.Services.Interfaces
 {
-    public interface IUserService : IBaseService<UserDto>
+    public interface IUserService : IBaseService<User>
     {
-        Task<AuthenticateUserDto> AuthenticateAsync(string username, string password);
-        Task<UserDto> CreateUserAsync(string userName, string password);
+        Task<string> AuthenticateAsync(string username, string password);
+        Task<string> CreateUserAsync(string userName, string name, string password);
+
     }
 
 }

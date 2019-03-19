@@ -3,98 +3,139 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using VideoService.VideoServiceBL.Services;
-using VideoServiceBL.DTOs.UsersDtos;
 using VideoServiceBL.Enums;
+using VideoServiceBL.Exceptions;
 using VideoServiceBL.Services.Interfaces;
 using VideoServiceDAL.Models;
 using VideoServiceDAL.Persistence;
 
 namespace VideoServiceBL.Services
 {
-    public class UserService : BaseService<User, UserDto>, IUserService
+    public class UserService : BaseService<User>, IUserService
     {
         private readonly ICryptService _cryptService;
+        private readonly ILogger<UserService> _logger;
         private readonly AuthSettings _settings;
 
-        public UserService(VideoServiceDbContext context, IMapper mapper,
-            ICryptService cryptService, IOptions<AuthSettings> settings)
-            : base(context, mapper)
+        public UserService(VideoServiceDbContext context,
+            ICryptService cryptService, IOptions<AuthSettings> settings, ILogger<UserService> logger)
+            : base(context, logger)
         {
             _cryptService = cryptService;
+            _logger = logger;
             _settings = settings.Value;
         }
 
-        public async Task<UserDto> CreateUserAsync(string userName, string password)
+        public async Task<string> CreateUserAsync(string userName, string name, string password)
         {
-            var userDto = new UserDto
+            try
             {
-                Role = (byte)Role.User,
-                Username = userName,
-                Password = _cryptService.EncodePassword(password)
-            };
+                var userFromData = new User
+                {
+                    Role = (byte) Role.User,
+                    Username = userName,
+                    Name = name,
+                    Password = _cryptService.EncodePassword(password)
+                };
 
-            var user = await TryGetUserAsync(userName);
+                var user = await TryGetUserAsync(userName);
 
-            if (user != null)
+                if (user != null)
+                {
+                    throw new UserServiceException("User already exists!");
+                }
+
+                var createdUser = await AddAsync(userFromData);
+
+                string authUser;
+                if (createdUser != null)
+                {
+                    authUser = await AuthenticateAsync(createdUser.Username, createdUser.Password);
+                }
+                else
+                {
+                    throw new UserServiceException("User has not been added! Please try again!");
+                }
+
+                return authUser;
+            }
+            catch (CryptServiceException cryptServiceException)
             {
-                return null;
+                throw new BusinessLogicException(cryptServiceException.Message, cryptServiceException);
             }
 
-            await AddAsync(userDto);
-
-            var createdUser = await TryGetUserAsync(userName);
-            createdUser.Password = null;
-            return createdUser;
         }
 
-        public async Task<AuthenticateUserDto> AuthenticateAsync(string username, string password)
+        public async Task<string> AuthenticateAsync(string username, string password)
         {
-            var enhancedHashPassword = _cryptService.EncodePassword(password);
-            var user = await this.TryGetUserAsync(username); 
-
-            // return null if user not found
-            if (user == null || !_cryptService.VerifyPassword(password, enhancedHashPassword))
+            try
             {
-                return null;
-            }
+                var enhancedHashPassword = _cryptService.EncodePassword(password);
+                var user = await this.TryGetUserAsync(username);
+                var isPasswordVerified = _cryptService.VerifyPassword(password, enhancedHashPassword);
 
+                // return null if user not found
+                if (user == null || !isPasswordVerified)
+                {
+                    throw new UserServiceException("User or password is incorrect");
+                }
+
+                return GetAuthenticateUserWithTokenAsync(user);
+            }
+            catch (CryptServiceException cryptServiceException)
+            {
+                throw new BusinessLogicException(cryptServiceException.Message, cryptServiceException);
+            }
+        }
+
+        private string GetAuthenticateUserWithTokenAsync(User user)
+        {
             var roleEnumValue = (Role) user.Role;
             var role = roleEnumValue.ToString();
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = GetJwtSecurityTokenHandler(user, role);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
+        private SecurityTokenDescriptor GetJwtSecurityTokenHandler(User user, string role)
+        {
             var key = Encoding.ASCII.GetBytes(_settings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            return new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Username),
+                    new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_settings.LifeTime),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            var authUser = Mapper.Map<UserDto, AuthenticateUserDto>(user);
-            authUser.Token = tokenHandler.WriteToken(token);
-            authUser.Password = null;
-
-            return authUser;
         }
 
-        public async Task<UserDto> TryGetUserAsync(string userName)
+        private async Task<User> TryGetUserAsync(string userName)
         {
-            var user = await Entities.SingleOrDefaultAsync(e => e.Username.Equals(userName));
-            return Mapper.Map<User, UserDto>(user);
+            try
+            {
+                return await Entities.SingleOrDefaultAsync(e => e.Username.Equals(userName));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("DataBase error, could not get the user", ex);
+                throw new BusinessLogicException("Could not get the user", ex);
+            }
         }
 
     }
 }
+

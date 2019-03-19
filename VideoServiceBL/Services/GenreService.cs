@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using VideoService.VideoServiceBL.Services;
-using VideoServiceBL.DTOs;
+﻿using Microsoft.Extensions.Logging;
 using VideoServiceBL.Services.Interfaces;
 using VideoServiceDAL.Models;
 using VideoServiceDAL.Persistence;
 
 namespace VideoServiceBL.Services
 {
-    public class GenreService: BaseService<Genre, GenreDto>, IGenreService
+    public class GenreService: BaseService<Genre>, IGenreService
     {
-        public GenreService(VideoServiceDbContext context, IMapper mapper) : base(context, mapper)
+
+
+        public GenreService(VideoServiceDbContext context, ILogger<BaseService<Genre>> logger) : base(context, logger)
         {
         }
     }

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace VideoServiceDAL.Models
 {
     public class Movie
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [StringLength(255)]
@@ -14,7 +15,7 @@ namespace VideoServiceDAL.Models
         public Genre Genre { get; set; }
 
         [Required]
-        public byte GenreId { get; set; }
+        public long GenreId { get; set; }
 
         public DateTime DateAdded { get; set; }
 
@@ -25,5 +26,7 @@ namespace VideoServiceDAL.Models
         public byte NumberAvailable { get; set; }
 
         public double Rate { get; set; }
+
+        public List<Rental> Rentals { get; set; }
     }
 }

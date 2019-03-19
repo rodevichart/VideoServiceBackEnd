@@ -1,4 +1,4 @@
-using System.Text;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
+using VideoService.Configurations;
+using VideoService.Configurations.ServiceConfigurations;
+using VideoService.Logger;
+using VideoService.Services;
+using VideoService.Services.Interfaces;
 using VideoServiceBL;
 using VideoServiceBL.Services;
 using VideoServiceBL.Services.Interfaces;
@@ -27,27 +31,8 @@ namespace VideoService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var key = Encoding.ASCII.GetBytes(Configuration["AuthSettings:Secret"]);
-
             // 1. Add Authentication Services
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateLifetime = true,
-                        ValidateAudience = false
-                    };
-                });
+            AuthenticationConfigurations.Configure(services, Configuration);
 
             services.AddAutoMapper();
 
@@ -56,19 +41,27 @@ namespace VideoService
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddOptions<AuthSettings>().Configure(o =>
+            {
+                o.LifeTime = Convert.ToDouble(Configuration["AuthSettings:LifeTime"]);
+                o.Secret = Configuration["AuthSettings:Secret"];
+            });
+
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICryptService, CryptService>();
-            services.AddScoped<IUnitOfWorkService, UnitOfWorkService>();
+//            services.AddScoped<IUnitOfWorkService, UnitOfWorkService>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IRentalService, RentalService>();
 
-            services.AddOptions<AuthSettings>(Configuration["AuthSettings"]);
+            services.AddSingleton<ILogger, FileLogger>();
+            services.AddSingleton<IWriteToFileText, WriteToFileText>();
 
             services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IWriteToFileText writeToFileText)
         {
             if (env.IsDevelopment())
             {
@@ -76,13 +69,14 @@ namespace VideoService
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                ExceptionHandlerConfigurations.Configure(app, loggerFactory, writeToFileText);
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCors(builder => builder.AllowAnyOrigin());
-            //app.UseSpaStaticFiles();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             // 2. Enable authentication middleware
             app.UseAuthentication();

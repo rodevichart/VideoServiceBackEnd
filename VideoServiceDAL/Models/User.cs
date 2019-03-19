@@ -4,13 +4,10 @@ namespace VideoServiceDAL.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [StringLength(255)]
-        public string FirstName { get; set; }
-
-        [StringLength(255)]
-        public string LastName { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [StringLength(255)]

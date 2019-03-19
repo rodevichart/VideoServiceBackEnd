@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace VideoServiceBL.Services.Interfaces
 {
-    public interface IBaseService<TDto> where TDto : class
+    public interface IBaseService<T> where T : class
     {
-        Task<TDto> GetAsync(int id);
-        Task<IEnumerable<TDto>> GetAllAsync();
-        Task AddAsync(TDto dtoObj);
-        Task AddRangeAsync(IList<TDto> dtoObjs);
-        Task RemoveAsync(int id);
-        Task RemoveRangeAsync(IList<TDto> dtoObjs);
-        Task UpdateAsync(TDto dtoObj);
+        Task<T> AddAsync(T obj);
+        Task AddRangeAsync(IList<T> objs);
+        Task<T> GetAsync(long id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task RemoveAsync(long id);
+        Task RemoveRangeAsync(IList<T> objs);
+        Task UpdateAsync(T obj);
     }
 }

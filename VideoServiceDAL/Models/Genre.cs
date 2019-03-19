@@ -6,7 +6,7 @@ namespace VideoServiceDAL.Models
     [Table("Genres")]
     public class Genre
     {
-        public byte Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [StringLength(255)]
