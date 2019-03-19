@@ -3,10 +3,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using VideoServiceBL.DTOs.UsersDtos;
 using VideoServiceBL.Enums;
 using VideoServiceBL.Exceptions;
 using VideoServiceBL.Services.Interfaces;
@@ -15,15 +17,15 @@ using VideoServiceDAL.Persistence;
 
 namespace VideoServiceBL.Services
 {
-    public class UserService : BaseService<User>, IUserService
+    public class UserService : BaseService<User, UserDto>, IUserService
     {
         private readonly ICryptService _cryptService;
         private readonly ILogger<UserService> _logger;
         private readonly AuthSettings _settings;
 
         public UserService(VideoServiceDbContext context,
-            ICryptService cryptService, IOptions<AuthSettings> settings, ILogger<UserService> logger)
-            : base(context, logger)
+            ICryptService cryptService, IOptions<AuthSettings> settings, ILogger<UserService> logger, IMapper mapper)
+            : base(context, logger, mapper)
         {
             _cryptService = cryptService;
             _logger = logger;
@@ -34,7 +36,7 @@ namespace VideoServiceBL.Services
         {
             try
             {
-                var userFromData = new User
+                var userFromData = new UserDto
                 {
                     Role = (byte) Role.User,
                     Username = userName,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using VideoServiceBL.DTOs.MoviesDtos;
@@ -14,21 +15,39 @@ using VideoServiceDAL.Persistence;
 
 namespace VideoServiceBL.Services
 {
-    public class MovieService : BaseService<Movie>, IMovieService
+    public class MovieService : BaseService<Movie,MovieDto>, IMovieService
     {
         private readonly ILogger<MovieService> _logger;
+        private readonly IMapper _mapper;
 
-        public MovieService(VideoServiceDbContext context, ILogger<MovieService> logger)
-            : base(context, logger)
+        public MovieService(VideoServiceDbContext context, ILogger<MovieService> logger, IMapper mapper)
+            : base(context, logger, mapper)
         {
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public async Task<Movie> GetMovieWithGenreByIdAsync(long id)
+        public async Task<MovieDataDto> AddMovieAsync(MovieDataDto movieData)
+        {
+            var movieDto = _mapper.Map<MovieDataDto, MovieDto>(movieData);
+            var result = await AddAsync(movieDto);
+            return _mapper.Map<MovieDto, MovieDataDto>(result);
+        }
+
+        public async Task UpdateMovieAsync(int id, MovieDataDto movieData)
+        {
+            var movieDto = _mapper.Map<MovieDataDto, MovieDto>(movieData);
+            movieDto.Id = id;
+            await UpdateAsync(movieDto);
+        }
+
+        public async Task<MovieDto> GetMovieWithGenreByIdAsync(long id)
         {
             try
             {
-                return await Entities.Include(m => m.Genre).SingleOrDefaultAsync(m => m.Id == id);
+                var result = await Entities.Include(m => m.Genre).SingleOrDefaultAsync(m => m.Id == id);
+                return _mapper.Map<Movie, MovieDto>(result);
+
             }
             catch (Exception ex)
             {
@@ -42,7 +61,7 @@ namespace VideoServiceBL.Services
             return await Entities.Include(m => m.Genre).ToListAsync(); 
         }
 
-        public async Task<QueryResult<Movie>> GetMovieWithGenreForDataTable(
+        public async Task<QueryResultDto<MovieDto>> GetMovieWithGenreForDataTable(
             MovieDataTableSettings settings)
         {
             try
@@ -71,11 +90,12 @@ namespace VideoServiceBL.Services
 
                 query = query.ApplyPaging(settings);
 
-                var result = await query.ToListAsync();
+                var resultDto = (await query.ToListAsync()).Select(_mapper.Map<Movie, MovieDto>);
 
-                return new QueryResult<Movie>
+
+                return new QueryResultDto<MovieDto>
                 {
-                    Items = result,
+                    Items = resultDto.ToList(),
                     TotalItems = totalRecords
                 };
             }

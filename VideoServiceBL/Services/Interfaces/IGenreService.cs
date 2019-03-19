@@ -1,8 +1,9 @@
-﻿using VideoServiceDAL.Models;
+﻿using VideoServiceBL.DTOs;
+using VideoServiceDAL.Models;
 
 namespace VideoServiceBL.Services.Interfaces
 {
-    public interface IGenreService: IBaseService<Genre>
+    public interface IGenreService: IBaseService<GenreDto>
     {  
     }
 }

@@ -19,5 +19,8 @@ namespace VideoService.Logger
             return new FileLogger(_writeToFileText, _path);
         }
 
+        public void Dispose()
+        {
+        }
     }
 }

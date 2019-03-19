@@ -5,12 +5,15 @@ using VideoServiceDAL.Models;
 
 namespace VideoServiceBL.Services.Interfaces
 {
-    public interface IMovieService : IBaseService<Movie>
+    public interface IMovieService : IBaseService<MovieDto>
     {
+        Task UpdateMovieAsync(int id, MovieDataDto movieData);
+        Task<MovieDataDto> AddMovieAsync(MovieDataDto movieData);
+
         Task<IEnumerable<Movie>> GetMovieWithGenreAsync();
 
-        Task<QueryResult<Movie>> GetMovieWithGenreForDataTable(MovieDataTableSettings settings);
+        Task<QueryResultDto<MovieDto>> GetMovieWithGenreForDataTable(MovieDataTableSettings settings);
 
-        Task<Movie> GetMovieWithGenreByIdAsync(long id);
+        Task<MovieDto> GetMovieWithGenreByIdAsync(long id);
     }
 }

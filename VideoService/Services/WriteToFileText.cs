@@ -12,9 +12,9 @@ namespace VideoService.Services
         {
             try
             {
-                using (var sw = !File.Exists(path) ? File.CreateText(path) : File.AppendText(path))
+                lock (_lock)
                 {
-                    lock (_lock)
+                    using (var sw = !File.Exists(path) ? File.CreateText(path) : File.AppendText(path))
                     {
                         sw.WriteLine(writeText);
                     }

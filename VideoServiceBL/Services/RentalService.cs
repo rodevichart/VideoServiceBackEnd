@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using VideoServiceBL.DTOs.MoviesDtos;
@@ -16,17 +17,26 @@ using VideoServiceDAL.Persistence;
 
 namespace VideoServiceBL.Services
 {
-    public class RentalService: BaseService<Rental>, IRentalService
+    public class RentalService: BaseService<Rental, RentalDto>, IRentalService
     {
         private readonly ILogger<RentalService> _logger;
+        private readonly IMapper _mapper;
 
-        public RentalService(VideoServiceDbContext context, ILogger<RentalService> logger)
-            : base(context, logger)
+        public RentalService(VideoServiceDbContext context, ILogger<RentalService> logger, IMapper mapper)
+            : base(context, logger, mapper)
         {
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public async Task<QueryResult<Rental>> GetAllRentalMoviesAsync(
+        public async Task AddRentalByUserIdAndMovieIdAsync(AddRentalDto model)
+        {
+            var rental = _mapper.Map<AddRentalDto, RentalDto>(model);
+            rental.DateRented = DateTime.Now;
+            await AddAsync(rental);
+        }
+
+        public async Task<QueryResultDto<RentalDto>> GetAllRentalMoviesAsync(
             RentalDataTableSettings settings)
         {
             if (!settings.UserId.HasValue)
@@ -38,13 +48,13 @@ namespace VideoServiceBL.Services
             return await GetRentalMoviesAsync(settings);
         }
 
-        public async Task<QueryResult<Rental>> GetAllRentalMoviesWithUsersAsync(
+        public async Task<QueryResultDto<RentalDto>> GetAllRentalMoviesWithUsersAsync(
             RentalDataTableSettings settings)
         {
             return await GetRentalMoviesAsync(settings);
         }
 
-        private async Task<QueryResult<Rental>> GetRentalMoviesAsync(
+        private async Task<QueryResultDto<RentalDto>> GetRentalMoviesAsync(
             RentalDataTableSettings settings)
         {
             try
@@ -80,11 +90,11 @@ namespace VideoServiceBL.Services
 
                 query = query.ApplyPaging(settings);
 
-                var result = await query.ToListAsync();
+                var resultDto = (await query.ToListAsync()).Select(_mapper.Map<Rental, RentalDto>);
 
-                return new QueryResult<Rental>
+                return new QueryResultDto<RentalDto>
                 {
-                    Items = result,
+                    Items = resultDto.ToList(),
                     TotalItems = totalRecords
                 };
             }

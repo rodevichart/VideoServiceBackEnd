@@ -5,10 +5,12 @@ using VideoServiceDAL.Models;
 
 namespace VideoServiceBL.Services.Interfaces
 {
-    public interface IRentalService : IBaseService<Rental>
+    public interface IRentalService : IBaseService<RentalDto>
     {
-        Task<QueryResult<Rental>> GetAllRentalMoviesAsync(RentalDataTableSettings settings);
+        Task<QueryResultDto<RentalDto>> GetAllRentalMoviesAsync(RentalDataTableSettings settings);
 
-        Task<QueryResult<Rental>> GetAllRentalMoviesWithUsersAsync(RentalDataTableSettings settings);
+        Task<QueryResultDto<RentalDto>> GetAllRentalMoviesWithUsersAsync(RentalDataTableSettings settings);
+
+        Task AddRentalByUserIdAndMovieIdAsync(AddRentalDto model);
     }
 }

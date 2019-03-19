@@ -11,12 +11,14 @@ namespace VideoServiceBL.Mapping
     {
         public MappingProfile()
         {
-            CreateMap(typeof(QueryResult<>), typeof(QueryResultDto<>));
+//            CreateMap(typeof(QueryResultDto<>), typeof(QueryResultDto<>));
 
             CreateMap<Movie, MovieDto>();
             //.ForMember(dest => dest.GenreName,
             //            opt => opt.MapFrom(m => m.Genre.Name));
-            CreateMap<MovieDataDto, Movie>();
+            CreateMap<MovieDataDto, MovieDto>();
+
+            CreateMap<MovieDataDto, MovieDto>();
 
             CreateMap<Movie, MovieDto>();
             CreateMap<Genre, GenreDto>();
@@ -31,6 +33,7 @@ namespace VideoServiceBL.Mapping
             CreateMap<RentalDto, Rental>();
 
             CreateMap<AddRentalDto, Rental>();
+            CreateMap<AddRentalDto, RentalDto>();
         }
     }
 }

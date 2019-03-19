@@ -15,19 +15,15 @@ namespace VideoService.Controllers
     public class RentalForAdminController : Controller
     {
         private readonly IRentalService _rentalService;
-        private readonly IMapper _mapper;
 
-        public RentalForAdminController(IRentalService rentalService, IMapper mapper)
+        public RentalForAdminController(IRentalService rentalService)
         {
             _rentalService = rentalService;
-            _mapper = mapper;
         }
 
         public async Task<QueryResultDto<RentalDto>> GetAllRentalsWithUsersMoviesAsync([FromQuery] RentalDataTableSettings model)
         {
-            var queryResult = await
-                _rentalService.GetAllRentalMoviesWithUsersAsync(model);
-            return _mapper.Map<QueryResult<Rental>, QueryResultDto<RentalDto>>(queryResult);
+           return await _rentalService.GetAllRentalMoviesWithUsersAsync(model);
         }
 
         [HttpDelete]
