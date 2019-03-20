@@ -9,7 +9,6 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using VideoService.Configurations;
 using VideoService.Configurations.ServiceConfigurations;
-using VideoService.Logger;
 using VideoService.Services;
 using VideoService.Services.Interfaces;
 using VideoServiceBL;
@@ -54,7 +53,6 @@ namespace VideoService
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IRentalService, RentalService>();
 
-            services.AddSingleton<ILogger, FileLogger>();
             services.AddSingleton<IWriteToFileText, WriteToFileText>();
 
             services.AddCors();

@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using VideoServiceBL.DTOs.UsersDtos;
-using VideoServiceDAL.Models;
 
 namespace VideoServiceBL.Services.Interfaces
 {

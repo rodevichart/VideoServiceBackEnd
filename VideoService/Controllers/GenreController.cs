@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using VideoServiceBL.DTOs;
 using VideoServiceBL.Services.Interfaces;
-using VideoServiceDAL.Models;
 
 namespace VideoService.Controllers
 {

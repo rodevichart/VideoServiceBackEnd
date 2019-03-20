@@ -1,12 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VideoServiceBL.DTOs.MoviesDtos;
 using VideoServiceBL.DTOs.RentalsDtos;
 using VideoServiceBL.Services.Interfaces;
-using VideoServiceDAL.Models;
 
 namespace VideoService.Controllers
 {

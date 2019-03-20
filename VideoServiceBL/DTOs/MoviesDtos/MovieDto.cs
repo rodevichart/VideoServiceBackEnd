@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace VideoServiceBL.DTOs.MoviesDtos
+﻿namespace VideoServiceBL.DTOs.MoviesDtos
 {
     public class MovieDto
     {

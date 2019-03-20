@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.Configuration;
-using Microsoft.Extensions.Options;
-using VideoServiceBL.Services.Interfaces;
-using VideoServiceDAL.Persistence;
-
-namespace VideoServiceBL.Services
+﻿namespace VideoServiceBL.Services
 {
     public class UnitOfWorkService 
 //        : IUnitOfWorkService

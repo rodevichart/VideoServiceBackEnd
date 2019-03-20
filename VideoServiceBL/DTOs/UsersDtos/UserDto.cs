@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace VideoServiceBL.DTOs.UsersDtos
+﻿namespace VideoServiceBL.DTOs.UsersDtos
 {
     public class UserDto
     {

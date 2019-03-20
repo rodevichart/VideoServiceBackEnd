@@ -1,5 +1,4 @@
 ﻿using VideoServiceBL.DTOs;
-using VideoServiceDAL.Models;
 
 namespace VideoServiceBL.Services.Interfaces
 {

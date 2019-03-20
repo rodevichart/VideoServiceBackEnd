@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.IO;
 using Microsoft.Extensions.Logging;
 using VideoService.Extensions;
 using VideoService.Services.Interfaces;
