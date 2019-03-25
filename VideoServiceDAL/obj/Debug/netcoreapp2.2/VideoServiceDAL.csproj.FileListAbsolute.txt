@@ -14,9 +14,6 @@ D:\CoreReactDemo\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFramewo
 D:\CoreReactDemo\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\CoreReactDemo\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.Relational.xml
 D:\CoreReactDemo\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.xml
-D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.csproj.CoreCompileInputs.cache
-D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.AssemblyInfoInputs.cache
-D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.AssemblyInfo.cs
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\VideoServiceDAL.deps.json
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\VideoServiceDAL.dll
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\VideoServiceDAL.pdb
@@ -26,6 +23,9 @@ D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityF
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.xml
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.Relational.xml
 D:\VideoServiceBackEnd\VideoServiceDAL\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.SqlServer.xml
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.csproj.CoreCompileInputs.cache
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.AssemblyInfoInputs.cache
+D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.AssemblyInfo.cs
 D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.csproj.CopyComplete
 D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.dll
 D:\VideoServiceBackEnd\VideoServiceDAL\obj\Debug\netcoreapp2.2\VideoServiceDAL.pdb

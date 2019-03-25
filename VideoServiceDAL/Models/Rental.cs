@@ -1,8 +1,9 @@
 ﻿using System;
+using VideoServiceDAL.Interfaces;
 
 namespace VideoServiceDAL.Models
 {
-    public class Rental
+    public class Rental : IIdentifier
     {
         public long Id { get; set; }
         public long UserId { get; set; }

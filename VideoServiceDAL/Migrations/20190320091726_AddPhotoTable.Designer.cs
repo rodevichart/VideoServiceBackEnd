@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VideoServiceDAL.Persistence;
 
 namespace VideoServiceDAL.Migrations
 {
     [DbContext(typeof(VideoServiceDbContext))]
-    partial class VideoServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190320091726_AddPhotoTable")]
+    partial class AddPhotoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +31,11 @@ namespace VideoServiceDAL.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
+                    b.Property<long?>("MovieId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
 
                     b.ToTable("Covers");
                 });
@@ -55,8 +61,6 @@ namespace VideoServiceDAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CoverId");
-
                     b.Property<DateTime>("DateAdded");
 
                     b.Property<long>("GenreId");
@@ -74,8 +78,6 @@ namespace VideoServiceDAL.Migrations
                     b.Property<DateTime>("ReleaseDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CoverId");
 
                     b.HasIndex("GenreId");
 
@@ -128,12 +130,15 @@ namespace VideoServiceDAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("VideoServiceDAL.Models.Cover", b =>
+                {
+                    b.HasOne("VideoServiceDAL.Models.Movie")
+                        .WithMany("Covers")
+                        .HasForeignKey("MovieId");
+                });
+
             modelBuilder.Entity("VideoServiceDAL.Models.Movie", b =>
                 {
-                    b.HasOne("VideoServiceDAL.Models.Cover", "Cover")
-                        .WithMany()
-                        .HasForeignKey("CoverId");
-
                     b.HasOne("VideoServiceDAL.Models.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")

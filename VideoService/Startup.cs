@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using VideoService.Configurations;
 using VideoService.Configurations.ServiceConfigurations;
@@ -32,13 +35,17 @@ namespace VideoService
         {
             // 1. Add Authentication Services
             AuthenticationConfigurations.Configure(services, Configuration);
-
             services.AddAutoMapper();
 
             services.AddDbContext<VideoServiceDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                });
 
             services.AddOptions<AuthSettings>().Configure(o =>
             {
@@ -46,12 +53,15 @@ namespace VideoService
                 o.Secret = Configuration["AuthSettings:Secret"];
             });
 
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICryptService, CryptService>();
 //            services.AddScoped<IUnitOfWorkService, UnitOfWorkService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IRentalService, RentalService>();
+            services.AddScoped<ICoverService, CoverService>();
 
             services.AddSingleton<IWriteToFileText, WriteToFileText>();
 
@@ -69,6 +79,16 @@ namespace VideoService
             {
                 ExceptionHandlerConfigurations.Configure(app, loggerFactory, writeToFileText);
             }
+            app.UseStaticFiles();
+            if (string.IsNullOrWhiteSpace(env.WebRootPath))
+                env.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.WebRootPath, "uploads")),
+                RequestPath = new PathString("/uploads")
+            });
 
             app.UseHttpsRedirection();
             app.UseCors(builder => builder

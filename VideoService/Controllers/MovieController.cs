@@ -30,7 +30,7 @@ namespace VideoService.Controllers
         public async Task<MovieDto> GetMovieByIdAsync(long id)
         {
             return await
-                _movieService.GetMovieWithGenreByIdAsync(id);
+                _movieService.GetMovieWithGenreWithCoverByIdAsync(id);
         }
 
         [HttpPost("add")]

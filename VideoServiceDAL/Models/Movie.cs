@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using VideoServiceDAL.Interfaces;
 
 namespace VideoServiceDAL.Models
 {
-    public class Movie
+    public class Movie : IIdentifier
     {
         public long Id { get; set; }
 
@@ -28,5 +29,9 @@ namespace VideoServiceDAL.Models
         public double Rate { get; set; }
 
         public List<Rental> Rentals { get; set; }
+
+        public long? CoverId { get; set; }
+
+        public Cover Cover { get; set; }
     }
 }

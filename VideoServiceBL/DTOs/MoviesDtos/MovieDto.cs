@@ -1,4 +1,7 @@
-﻿namespace VideoServiceBL.DTOs.MoviesDtos
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace VideoServiceBL.DTOs.MoviesDtos
 {
     public class MovieDto
     {
@@ -8,5 +11,7 @@
         public GenreDto Genre { get; set; }
         public byte NumberInStock { get; set; }
         public double Rate { get; set; }
+        public long CoverId { get; set; }
+        public CoverDto Cover { get; set; }
     }
 }

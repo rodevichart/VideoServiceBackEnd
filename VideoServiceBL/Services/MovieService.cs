@@ -34,6 +34,7 @@ namespace VideoServiceBL.Services
             return _mapper.Map<MovieDto, MovieDataDto>(result);
         }
 
+       
         public async Task UpdateMovieAsync(int id, MovieDataDto movieData)
         {
             var movieDto = _mapper.Map<MovieDataDto, MovieDto>(movieData);
@@ -41,13 +42,15 @@ namespace VideoServiceBL.Services
             await UpdateAsync(movieDto);
         }
 
-        public async Task<MovieDto> GetMovieWithGenreByIdAsync(long id)
+        public async Task<MovieDto> GetMovieWithGenreWithCoverByIdAsync(long id)
         {
             try
             {
-                var result = await Entities.Include(m => m.Genre).SingleOrDefaultAsync(m => m.Id == id);
+                var result = await Entities
+                    .Include(m => m.Genre)
+                    .Include(m => m.Cover)
+                    .SingleOrDefaultAsync(m => m.Id == id);
                 return _mapper.Map<Movie, MovieDto>(result);
-
             }
             catch (Exception ex)
             {

@@ -14,6 +14,6 @@ namespace VideoServiceBL.Services.Interfaces
 
         Task<QueryResultDto<MovieDto>> GetMovieWithGenreForDataTable(MovieDataTableSettings settings);
 
-        Task<MovieDto> GetMovieWithGenreByIdAsync(long id);
+        Task<MovieDto> GetMovieWithGenreWithCoverByIdAsync(long id);
     }
 }

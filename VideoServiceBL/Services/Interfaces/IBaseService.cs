@@ -11,6 +11,6 @@ namespace VideoServiceBL.Services.Interfaces
         Task<IList<TDto>> GetAllAsync();
         Task RemoveAsync(long id);
         Task RemoveRangeAsync(IList<TDto> dtoObjs);
-        Task UpdateAsync(TDto dtoObj);
+        Task UpdateAsync(TDto dtoObj, long? id = null);
     }
 }

@@ -6,13 +6,15 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using VideoServiceBL.Exceptions;
+using VideoServiceBL.Extensions;
 using VideoServiceBL.Services.Interfaces;
+using VideoServiceDAL.Interfaces;
 using VideoServiceDAL.Persistence;
 
 namespace VideoServiceBL.Services
 {
     public abstract class BaseService<T, TDto> : IBaseService<TDto>
-        where T : class
+        where T : class, IIdentifier
         where TDto : class
     {
         protected readonly DbSet<T> Entities;
@@ -62,7 +64,9 @@ namespace VideoServiceBL.Services
         {
             try
             {
-                return  _mapper.Map<T,TDto>(await Entities.FindAsync(id)) ?? throw new BusinessLogicException("Item not found!");
+                var item = await Entities.FindAsync(id);
+
+                return  _mapper.Map<T,TDto>(item ?? throw new BusinessLogicException("Item not found!"));
             }
             catch (Exception ex)
             {
@@ -123,12 +127,12 @@ namespace VideoServiceBL.Services
             }
         }
 
-        public async Task UpdateAsync(TDto dtoObj)
+        public async Task UpdateAsync(TDto dtoObj, long? id = null)
         {
             try
             {
                 var item = _mapper.Map<TDto, T>(dtoObj);
-                Context.Entry(item).State = EntityState.Modified;
+                Context.DetachLocal(item, id);
                 await Context.SaveChangesAsync();
             }
             catch (Exception ex)

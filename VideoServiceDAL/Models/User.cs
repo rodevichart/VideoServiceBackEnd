@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using VideoServiceDAL.Interfaces;
 
 namespace VideoServiceDAL.Models
 {
-    public class User
+    public class User : IIdentifier
     {
         public long Id { get; set; }
 

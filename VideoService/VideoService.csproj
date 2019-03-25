@@ -17,5 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\VideoServiceBL\VideoServiceBL.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
 
 </Project>
