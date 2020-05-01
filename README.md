@@ -3,6 +3,8 @@ Video Service Back-End web app.
 
 Delevoped with  .Net Core 2.2, Entity Framework Core.
 
+For Authitification and Authorization was used Bearer JWT Token.
+
 Included Docker support with Nginx as reverse-proxy server.
 
 To run app need to use docker-copmose orchestrator and create SSL certificate.
