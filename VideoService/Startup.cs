@@ -1,23 +1,7 @@
-using System;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 using VideoService.Configurations;
 using VideoService.Configurations.ServiceConfigurations;
 using VideoService.Services;
 using VideoService.Services.Interfaces;
-using VideoServiceBL;
-using VideoServiceBL.Services;
-using VideoServiceBL.Services.Interfaces;
-using VideoServiceDAL.Persistence;
 
 namespace VideoService
 {
@@ -90,7 +74,12 @@ namespace VideoService
                 RequestPath = new PathString("/uploads")
             });
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptionsht
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseHttpsRedirection();
+            app.UseHsts();
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
