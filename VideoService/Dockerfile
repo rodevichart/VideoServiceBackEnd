@@ -16,7 +16,7 @@ RUN dotnet build VideoService/VideoService.csproj -c Release -o /app
 RUN dotnet publish VideoService/VideoService.csproj -c Release -o out
 
 # Build runtime image
-FROM microsoft/dotnet:2.2-aspnetcore-runtime
+FROM microsoft/dotnet:2.2-aspnetcore-runtime-alpine
 WORKDIR /app
 COPY --from=build-env /app/out .
 
