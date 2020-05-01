@@ -80,10 +80,22 @@ namespace VideoService
             });
             app.UseHttpsRedirection();
             app.UseHsts();
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.AddCors(options => options.AddPolicy("AllowCors",
+                builder =>
+                {
+                    builder
+                        .SetIsOriginAllowed(x =>
+                        {
+                            return
+                            (
+                                x.ToLower().IndexOf("localhost") >= 0 ||
+                                x.ToLower().IndexOf("produrl") >= 0
+                            );
+                        })
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                }));
 
             // 2. Enable authentication middleware
             app.UseAuthentication();
