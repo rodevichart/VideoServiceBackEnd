@@ -3,7 +3,9 @@ Video Service Back-End web app.
 
 An online video rental service. Where customers could rent any available video. Every user has its own account with a private office. Where he could see the rental history and video expiration date. From the office, he could manage videos. Also, the app has admin mode where admins could create and remove customer accounts, manage video availability.
 
-Delevoped with  .Net Core 2.2, Entity Framework Core.
+Delevoped with  .Net Core 2.2, Entity Framework Core (code-first).
+
+Was applied N-Layer architecture. AutoMapper for mapping objects from different Layers. Repository pattern (in current solution via Services) for encapsulating DAL. 
 
 For Authitification and Authorization was used Bearer JWT Token.
 
